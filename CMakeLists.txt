@@ -1,12 +1,13 @@
 cmake_minimum_required(VERSION 4.3)
+
 project(Biblioteca C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(Biblioteca src/main.c
-        include/livro.h
-        include/utilizador.h
-        include/emprestimo.h
+add_executable(Biblioteca
+        src/main.c
+        src/menu.c
         include/menu.h
-        include/menu.h
-        src/menu.c)
+)
+
+target_include_directories(Biblioteca PRIVATE include)

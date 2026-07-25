@@ -14,4 +14,9 @@ typedef struct {
     int devolvido;
 } BIBLIOTECA_EMPRESTIMO_H;
 
+void loanBook();
+void returnBook();
+void loanActive();
+void loanHistory();
+
 #endif //BIBLIOTECA_EMPRESTIMO_H

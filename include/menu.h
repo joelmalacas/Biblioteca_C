@@ -5,12 +5,15 @@
 #ifndef BIBLIOTECA_MENU_H
 #define BIBLIOTECA_MENU_H
 
-
 void showMainMenu();
 void booksMenu();
 void usersMenu();
 void loansMenu();
 
 int getOption();
+
+void booksMenuLoop();
+void usersMenuLoop();
+void loansMenuLoop();
 
 #endif //BIBLIOTECA_MENU_H

@@ -4,6 +4,9 @@
 
 #include <stdio.h>
 #include "menu.h"
+#include "livro.h"
+#include "utilizador.h"
+#include "emprestimo.h"
 
 void showMainMenu() {
     printf("\n=====Sistema Biblioteca=====\n");
@@ -11,6 +14,15 @@ void showMainMenu() {
     printf("2. Utilizadores \n");
     printf("3. Empréstimos \n");
     printf("0. Sair \n>");
+}
+
+void usersMenu() {
+    printf("\n=====Utilizadores Menu=====\n");
+    printf("1. Adicionar Utilizador \n");
+    printf("2. Listar Utilizador \n");
+    printf("3. Atualizar Utilizador");
+    printf("4. Apagar Utilizador");
+    printf("0. Voltar \n>");
 }
 
 void booksMenu() {
@@ -25,17 +37,98 @@ void booksMenu() {
 
 void loansMenu() {
     printf("\n=====Empréstimos Menu=====\n");
-    printf("1. Emprestar Livro");
-    printf("2. Devolver Livro");
-    printf("3. Empréstimos ativos");
-    printf("4. Histórico empréstimos");
+    printf("1. Emprestar Livro \n");
+    printf("2. Devolver Livro \n");
+    printf("3. Empréstimos ativos \n");
+    printf("4. Histórico empréstimos \n");
     printf("0. Voltar \n>");
+}
+
+void booksMenuLoop() {
+    int option;
+
+    do {
+        booksMenu();
+        option = getOption();
+
+        switch (option) {
+            case 1:
+                adicionarLivro();
+                break;
+            case 2:
+                listarLivros();
+                break;
+            case 3:
+                atualizarLivro();
+                break;
+            case 4:
+                procurarLivro();
+                break;
+            case 5:
+                removerLivro();
+                break;
+            default:
+                printf("Invalid Option");
+        }
+    } while(option != 0);
+}
+
+void usersMenuLoop() {
+    int option;
+
+    do {
+        usersMenu();
+
+        option = getOption();
+
+        switch (option) {
+            case 1:
+                criarUser();
+                break;
+            case 2:
+                listarUser();
+                break;
+            case 3:
+                atualizarUser();
+                break;
+            case 4:
+                removerUser();
+                break;
+            default:
+                printf("Invalid Option");
+        }
+    } while (option != 0);
+}
+
+void loansMenuLoop() {
+    int option;
+
+    do {
+        loansMenu();
+
+        option = getOption();
+
+        switch (option) {
+            case 1:
+                loanBook();
+                break;
+            case 2:
+                returnBook();
+                break;
+            case 3:
+                loanActive();
+                break;
+            case 4:
+                loanHistory();
+                break;
+            default:
+                printf("Invalid Option");
+        }
+    } while (option != 0);
 }
 
 int getOption() {
     int option;
-
-    printf("\nOpção: ");
     scanf("%d", &option);
 
     return option;
