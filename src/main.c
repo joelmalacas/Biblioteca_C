@@ -17,7 +17,7 @@ int main(void) {
                 usersMenuLoop();
                 break;
             case 3:
-                loansMenu();
+                loansMenuLoop();
                 break;
             case 0:
                 showMainMenu();
@@ -25,7 +25,6 @@ int main(void) {
             default:
                 printf("Invalid Option!! \n");
         }
-
     } while (option != 0);
 
     return 0;
