@@ -6,4 +6,7 @@ set(CMAKE_C_STANDARD 11)
 add_executable(Biblioteca src/main.c
         include/livro.h
         include/utilizador.h
-        include/emprestimo.h)
+        include/emprestimo.h
+        include/menu.h
+        include/menu.h
+        src/menu.c)

@@ -15,6 +15,7 @@ typedef struct {
 void adicionarLivro();
 void listarLivros();
 void atualizarLivro();
+void procurarLivro();
 void removerLivro();
 
 #endif //BIBLIOTECA_EMPRESTIMO_H
