@@ -12,7 +12,7 @@ typedef struct {
     char data_emprestimo[11];
     char data_devolucao[11];
     int devolvido;
-} BIBLIOTECA_EMPRESTIMO_H;
+} Emprestimo;
 
 void loanBook();
 void returnBook();

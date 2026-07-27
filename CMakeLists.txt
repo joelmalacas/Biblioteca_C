@@ -8,6 +8,9 @@ add_executable(Biblioteca
         src/main.c
         src/menu.c
         include/menu.h
+        src/livro.c
+        src/utilizador.c
+        src/emprestimo.c
 )
 
 target_include_directories(Biblioteca PRIVATE include)

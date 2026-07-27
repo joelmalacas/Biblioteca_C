@@ -10,7 +10,7 @@ typedef struct {
     char titulo[50];
     char autor[50];
     int ano;
-} BIBLIOTECA_LIVRO_H;
+} Livro;
 
 void adicionarLivro();
 void listarLivros();

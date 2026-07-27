@@ -4,6 +4,9 @@
 
 #include <stdio.h>
 #include "menu.h"
+
+#include <string.h>
+
 #include "livro.h"
 #include "utilizador.h"
 #include "emprestimo.h"
@@ -20,8 +23,8 @@ void usersMenu() {
     printf("\n=====Utilizadores Menu=====\n");
     printf("1. Adicionar Utilizador \n");
     printf("2. Listar Utilizador \n");
-    printf("3. Atualizar Utilizador");
-    printf("4. Apagar Utilizador");
+    printf("3. Atualizar Utilizador \n");
+    printf("4. Apagar Utilizador \n");
     printf("0. Voltar \n>");
 }
 
@@ -68,9 +71,11 @@ void booksMenuLoop() {
                 removerLivro();
                 break;
             default:
-                printf("Invalid Option");
+                break;
         }
     } while(option != 0);
+
+    showMainMenu();
 }
 
 void usersMenuLoop() {
@@ -95,9 +100,11 @@ void usersMenuLoop() {
                 removerUser();
                 break;
             default:
-                printf("Invalid Option");
+                break;
         }
     } while (option != 0);
+
+    showMainMenu();
 }
 
 void loansMenuLoop() {
@@ -122,14 +129,24 @@ void loansMenuLoop() {
                 loanHistory();
                 break;
             default:
-                printf("Invalid Option");
+                break;
         }
     } while (option != 0);
+
+    showMainMenu();
 }
 
 int getOption() {
     int option;
-    scanf("%d", &option);
+
+    if (scanf("%d", &option) != 1) {
+
+        //Limpar buffer para remover texto inválido
+        int c;
+        while ((c = getchar()) != '\n' && c != EOF) {}
+
+        return -1;
+    }
 
     return option;
 }

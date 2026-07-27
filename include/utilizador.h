@@ -10,7 +10,7 @@ typedef struct {
     char nome[50];
     char email[100];
     int idade;
-} BIBLIOTECA_UTILIZADOR_H;
+} Utilizador;
 
 void criarUser();
 void listarUser();
