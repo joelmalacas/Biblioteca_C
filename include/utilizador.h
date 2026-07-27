@@ -6,13 +6,18 @@
 #define BIBLIOTECA_UTILIZADOR_H
 
 typedef struct {
-    int id;
     char nome[50];
     char email[100];
     int idade;
 } Utilizador;
 
-void criarUser();
+typedef enum {
+    SUCCESS = 0,
+    INVALID_DATA = -1,
+    DB_ERROR = -2
+} Result;
+
+Result criarUser(const char *nome, const char *email, int idade);
 void listarUser();
 void atualizarUser();
 void removerUser();

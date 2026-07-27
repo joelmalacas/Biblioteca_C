@@ -88,7 +88,12 @@ void usersMenuLoop() {
 
         switch (option) {
             case 1:
-                criarUser();
+                const int res = criarUser("Joel_Malacas", "joelmalacas@gmail.com", 23);
+
+                if (res == -1 || res == -2)
+                    printf("Erro ao tentar criar user");
+                else
+                    printf("User criado com sucesso");
                 break;
             case 2:
                 listarUser();
@@ -141,7 +146,7 @@ int getOption() {
 
     if (scanf("%d", &option) != 1) {
 
-        //Limpar buffer para remover texto inválido
+        //Limpar buffer para remover entrada inválida
         int c;
         while ((c = getchar()) != '\n' && c != EOF) {}
 

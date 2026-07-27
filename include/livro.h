@@ -18,4 +18,4 @@ void atualizarLivro();
 void procurarLivro();
 void removerLivro();
 
-#endif //BIBLIOTECA_EMPRESTIMO_H
+#endif //BIBLIOTECA_LIVRO_H

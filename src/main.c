@@ -23,11 +23,11 @@ int main(void) {
                 showMainMenu();
                 break;
             case -1:
-                printf("Invalid Option!! \n");
+                printf("Opção Inválida!! \n");
                 showMainMenu();
                 break;
             default:
-                printf("Invalid Option!! \n");
+                printf("Opção Inválida!! \n");
                 showMainMenu();
         }
     } while (option != 0);
