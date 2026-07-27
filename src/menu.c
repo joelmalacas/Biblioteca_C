@@ -86,9 +86,21 @@ void usersMenuLoop() {
 
         option = getOption();
 
+
         switch (option) {
             case 1:
-                const int res = criarUser("Joel_Malacas", "joelmalacas@gmail.com", 23);
+                //ENTRY
+                char nome[50], email[100];
+                int idade;
+
+                printf("\n\nInsira o nome: ");
+                scanf("%49s", nome);
+                printf("\nInsira o email: ");
+                scanf("%s", email);
+                printf("\nInsira idade: ");
+                scanf("%d", &idade);
+
+                const int res = criarUser(nome, email, idade);
 
                 if (res == -1 || res == -2)
                     printf("Erro ao tentar criar user");
