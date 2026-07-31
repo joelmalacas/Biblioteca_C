@@ -104,8 +104,7 @@ int listarUser() {
            "Nome", "Email", "Idade", "Criado");
     printf("+--------------------------------+--------------------------------------+--------+---------------------+\n");
 
-    while ((row = mysql_fetch_row(res)))
-    {
+    while ((row = mysql_fetch_row(res))) {
         printf("| %-30.30s | %-36.36s | %-6s | %-19.19s |\n",
                row[0],
                row[1],
@@ -120,10 +119,12 @@ int listarUser() {
     return SUCCESS;
 }
 
-void atualizarUser() {
+int atualizarUser(char *emailUpdate) {
     //TODO UPDATE USER
+    return SUCCESS;
 }
 
-void removerUser() {
+int removerUser(char *email) {
     //TODO DEL USER
+    return SUCCESS;
 }

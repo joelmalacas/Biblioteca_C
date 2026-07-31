@@ -110,10 +110,34 @@ void usersMenuLoop() {
                     printf("Erro ao tentar listar user");
                 break;
             case 3:
-                atualizarUser();
+                char escolha;
+
+                printf("Insira o email a atualizar: ");
+                scanf("%s", email);
+
+                printf("O que deseja alterar?\nNome (n) ou Idade (i)");
+                scanf("%c", &escolha);
+
+                switch (escolha) {
+                    case 'n':
+                        printf("Introduz o novo nome: ");
+                        scanf("%s", nome);
+                        break;
+                    case 'i':
+                        printf("Introduz a nova idade: ");
+                        scanf("%d", &idade);
+                        break;
+                    default:
+                        break;
+                }
+
+                const int resUpdate = atualizarUser(email);
+
+                if (resUpdate == -1 || resUpdate == -2)
+                    printf("Erro ao tentar atualizar user");
                 break;
             case 4:
-                removerUser();
+                removerUser(email);
                 break;
             default:
                 break;

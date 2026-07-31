@@ -20,7 +20,7 @@ typedef enum {
 Result criarUser(const char *nome, const char *email, int idade);
 
 int listarUser();
-void atualizarUser();
-void removerUser();
+int atualizarUser(char *emailUpdate);
+int removerUser(char *email);
 
 #endif //BIBLIOTECA_UTILIZADOR_H
