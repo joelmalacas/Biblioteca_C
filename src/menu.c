@@ -4,9 +4,6 @@
 
 #include <stdio.h>
 #include "menu.h"
-
-#include <string.h>
-
 #include "livro.h"
 #include "utilizador.h"
 #include "emprestimo.h"
@@ -86,7 +83,6 @@ void usersMenuLoop() {
 
         option = getOption();
 
-
         switch (option) {
             case 1:
                 //ENTRY
@@ -108,7 +104,10 @@ void usersMenuLoop() {
                     printf("User criado com sucesso");
                 break;
             case 2:
-                listarUser();
+                int resList = listarUser();
+
+                if (resList == -1 || resList == -2)
+                    printf("Erro ao tentar listar user");
                 break;
             case 3:
                 atualizarUser();

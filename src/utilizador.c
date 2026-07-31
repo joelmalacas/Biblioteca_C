@@ -4,9 +4,7 @@
 
 #include <stdio.h>
 #include "utilizador.h"
-
 #include <string.h>
-
 #include "validation.h"
 #include "database.h"
 
@@ -81,8 +79,45 @@ Result criarUser(const char *nome, const char *email, int idade) {
     return SUCCESS;
 }
 
-void listarUser() {
+int listarUser() {
     //TODO LIST USER
+    MYSQL *conn = dbConnect();
+
+    if (conn == NULL)
+        return DB_ERROR;
+
+    if (mysql_query(conn, "SELECT nome, email, idade, created_at FROM utilizador")) {
+        printf("Erro %s", mysql_error(conn));
+        dbDisconnect(conn);
+        return DB_ERROR;
+    }
+
+    MYSQL_RES *res = mysql_store_result(conn);
+
+    if (res == NULL)
+        return DB_ERROR;
+
+    MYSQL_ROW row;
+
+    printf("+--------------------------------+--------------------------------------+--------+---------------------+\n");
+    printf("| %-30s | %-36s | %-6s | %-19s |\n",
+           "Nome", "Email", "Idade", "Criado");
+    printf("+--------------------------------+--------------------------------------+--------+---------------------+\n");
+
+    while ((row = mysql_fetch_row(res)))
+    {
+        printf("| %-30.30s | %-36.36s | %-6s | %-19.19s |\n",
+               row[0],
+               row[1],
+               row[2],
+               row[3]);
+    }
+
+    printf("+--------------------------------+--------------------------------------+--------+---------------------+\n");
+    mysql_free_result(res);
+    dbDisconnect(conn);
+
+    return SUCCESS;
 }
 
 void atualizarUser() {

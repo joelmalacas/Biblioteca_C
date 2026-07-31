@@ -18,7 +18,8 @@ typedef enum {
 } Result;
 
 Result criarUser(const char *nome, const char *email, int idade);
-void listarUser();
+
+int listarUser();
 void atualizarUser();
 void removerUser();
 

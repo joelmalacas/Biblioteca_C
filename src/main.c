@@ -20,7 +20,6 @@ int main(void) {
                 loansMenuLoop();
                 break;
             case 0:
-                showMainMenu();
                 break;
             case -1:
                 printf("Opção Inválida!! \n");
