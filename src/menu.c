@@ -154,7 +154,34 @@ void usersMenuLoop() {
                         break;
                 }
             case 4:
-                removerUser(email);
+                printf("Insira o email a apagar: ");
+                scanf("%s", email);
+
+                //TODO VERIFICA USER
+                const bool resCheckDel = checkUser(email);
+
+                if (!resCheckDel)
+                    break;
+
+                printf("Tem a certeza que quer mesmo apagar o utilizador? (s) || (n)\n> ");
+                scanf(" %c", &escolha);
+
+                escolha=tolower(escolha); //LowerCase Char
+
+                switch (escolha) {
+                    case 's':
+                        int delUser = removerUser(email);
+
+                        if (delUser == -1 || delUser == -2)
+                            printf("Erro ao tentar apagar utilizador");
+                        else
+                            printf("Utilizador apagado com sucesso");
+                        break;
+                    case 'n':
+                        break;
+                    default:
+                        break;
+                }
                 break;
             default:
                 break;
