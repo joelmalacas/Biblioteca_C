@@ -81,7 +81,7 @@ Result criarUser(const char *nome, const char *email, int idade) {
     return SUCCESS;
 }
 
-int listarUser() {
+Result listarUser() {
     //TODO LIST USER
     MYSQL *conn = dbConnect();
 
@@ -121,7 +121,7 @@ int listarUser() {
     return SUCCESS;
 }
 
-int atualizarUser(char *emailUpdate, char *nome, int idade) {
+Result atualizarUser(char *emailUpdate, char *nome, int idade) {
     //TODO UPDATE USER
     MYSQL *conn = dbConnect();
 
@@ -153,7 +153,7 @@ int atualizarUser(char *emailUpdate, char *nome, int idade) {
     return SUCCESS;
 }
 
-int removerUser(char *email) {
+Result removerUser(char *email) {
     //TODO DEL USER
     MYSQL *conn = dbConnect();
 

@@ -12,6 +12,12 @@ typedef struct {
     int ano;
 } Livro;
 
+typedef enum {
+    SUCCESS = 0,
+    INVALID_DATA = -1,
+    DB_ERROR = -2
+} Result;
+
 void adicionarLivro();
 void listarLivros();
 void atualizarLivro();

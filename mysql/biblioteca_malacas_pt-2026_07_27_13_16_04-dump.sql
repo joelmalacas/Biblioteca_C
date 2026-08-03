@@ -56,7 +56,7 @@ DROP TABLE IF EXISTS `livro`;
 CREATE TABLE `livro` (
   `id` int NOT NULL AUTO_INCREMENT,
   `titulo` varchar(50) DEFAULT NULL,
-  `auto` varchar(50) DEFAULT NULL,
+  `autor` varchar(50) DEFAULT NULL,
   `ano` int DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,

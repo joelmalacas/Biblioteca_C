@@ -3,10 +3,8 @@
 //
 
 #include <stdio.h>
-#include "menu.h"
-
 #include <ctype.h>
-
+#include "menu.h"
 #include "livro.h"
 #include "utilizador.h"
 #include "emprestimo.h"
@@ -50,12 +48,24 @@ void loansMenu() {
 void booksMenuLoop() {
     int option;
 
+    char *nomeLivro, autor;
+    int ano;
+
     do {
         booksMenu();
         option = getOption();
 
         switch (option) {
             case 1:
+                printf("Introduz o nome livro: \n>");
+                scanf("%s", nomeLivro);
+
+                printf("Introduz o autor livro: \n>");
+                scanf(" %s", autor);
+
+                printf("Introduz o ano do livro: \n>");
+                scanf(" %d", &ano);
+
                 adicionarLivro();
                 break;
             case 2:
@@ -153,6 +163,7 @@ void usersMenuLoop() {
                     default:
                         break;
                 }
+                break;
             case 4:
                 printf("Insira o email a apagar: ");
                 scanf("%s", email);

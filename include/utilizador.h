@@ -19,10 +19,11 @@ typedef enum {
 } Result;
 
 Result criarUser(const char *nome, const char *email, int idade);
+Result listarUser();
+Result atualizarUser(char *emailUpdate, char *nome, int idade);
+Result removerUser(char *email);
 
-int listarUser();
-int atualizarUser(char *emailUpdate, char *nome, int idade);
-int removerUser(char *email);
+//=====FUNC AUX=====
 bool checkUser(char *email);
 int UserID(char *email);
 
