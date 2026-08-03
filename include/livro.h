@@ -4,6 +4,7 @@
 
 #ifndef BIBLIOTECA_LIVRO_H
 #define BIBLIOTECA_LIVRO_H
+#include "utilizador.h"
 
 typedef struct {
     int id;
@@ -12,16 +13,10 @@ typedef struct {
     int ano;
 } Livro;
 
-typedef enum {
-    SUCCESS = 0,
-    INVALID_DATA = -1,
-    DB_ERROR = -2
-} Result;
-
-void adicionarLivro();
-void listarLivros();
-void atualizarLivro();
-void procurarLivro();
-void removerLivro();
+Result adicionarLivro(char *titulo, char *autorLivro, int ano);
+Result listarLivros();
+Result atualizarLivro(char *titulo, char *autor, int ano);
+Result procurarLivro();
+Result removerLivro();
 
 #endif //BIBLIOTECA_LIVRO_H

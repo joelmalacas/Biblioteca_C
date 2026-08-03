@@ -23,7 +23,7 @@ Result criarUser(const char *nome, const char *email, int idade) {
 
     MYSQL *conn = dbConnect();
 
-    if (conn == NULL)
+    if (!conn)
         return DB_ERROR;
 
     const char *query =
@@ -31,13 +31,12 @@ Result criarUser(const char *nome, const char *email, int idade) {
 
     MYSQL_STMT *stmt = mysql_stmt_init(conn);
 
-    if (stmt == NULL) {
+    if (!stmt) {
         dbDisconnect(conn);
         return DB_ERROR;
     }
 
     if (mysql_stmt_prepare(stmt, query, strlen(query))) {
-        printf("Prepare failed: %s\n", mysql_stmt_error(stmt));
         mysql_stmt_close(stmt);
         dbDisconnect(conn);
         return DB_ERROR;
@@ -85,7 +84,7 @@ Result listarUser() {
     //TODO LIST USER
     MYSQL *conn = dbConnect();
 
-    if (conn == NULL)
+    if (!conn)
         return DB_ERROR;
 
     if (mysql_query(conn, "SELECT nome, email, idade, created_at FROM " TABELA_UTILIZADOR)) {
@@ -96,7 +95,7 @@ Result listarUser() {
 
     MYSQL_RES *res = mysql_store_result(conn);
 
-    if (res == NULL)
+    if (!res)
         return DB_ERROR;
 
     MYSQL_ROW row;
@@ -196,7 +195,7 @@ bool checkUser(char *email) {
 
     const MYSQL_RES *res = mysql_store_result(conn);
 
-    if (res == NULL) {
+    if (!res) {
         dbDisconnect(conn);
         return false;
     }
@@ -228,7 +227,7 @@ int UserID(char *email) {
 
     const MYSQL_RES *res = mysql_store_result(conn);
 
-    if (res == NULL) {
+    if (!res) {
         dbDisconnect(conn);
         return DB_ERROR;
     }

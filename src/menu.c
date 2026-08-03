@@ -48,17 +48,17 @@ void loansMenu() {
 void booksMenuLoop() {
     int option;
 
-    char *nomeLivro, autor;
-    int ano;
-
     do {
         booksMenu();
         option = getOption();
 
+        char nomeLivro[50], autor[30];
+        int ano;
+
         switch (option) {
             case 1:
                 printf("Introduz o nome livro: \n>");
-                scanf("%s", nomeLivro);
+                scanf("%49s", nomeLivro);
 
                 printf("Introduz o autor livro: \n>");
                 scanf(" %s", autor);
@@ -66,7 +66,12 @@ void booksMenuLoop() {
                 printf("Introduz o ano do livro: \n>");
                 scanf(" %d", &ano);
 
-                adicionarLivro();
+                int resAdd = adicionarLivro(nomeLivro, autor, ano);
+
+                if (resAdd == -1 || resAdd == -2)
+                    printf("Erro ao tentar criar livro\n");
+                else
+                    printf("Livro criado com sucesso");
                 break;
             case 2:
                 listarLivros();
@@ -114,7 +119,7 @@ void usersMenuLoop() {
                 if (res == -1 || res == -2)
                     printf("Erro ao tentar criar user");
                 else
-                    printf("User criado com sucesso");
+                    printf("Utilizador criado com sucesso");
                 break;
             case 2:
                 int resList = listarUser();
