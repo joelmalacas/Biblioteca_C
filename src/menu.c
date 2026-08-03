@@ -4,6 +4,9 @@
 
 #include <stdio.h>
 #include "menu.h"
+
+#include <ctype.h>
+
 #include "livro.h"
 #include "utilizador.h"
 #include "emprestimo.h"
@@ -115,27 +118,41 @@ void usersMenuLoop() {
                 printf("Insira o email a atualizar: ");
                 scanf("%s", email);
 
-                printf("O que deseja alterar?\nNome (n) ou Idade (i)");
-                scanf("%c", &escolha);
+                //TODO VERIFICA USER
+                const bool resCheck = checkUser(email);
+
+                if (!resCheck)
+                    break; //Não existe
+
+                printf("O que deseja alterar?\nNome (n) ou Idade (i): ");
+                scanf(" %c", &escolha);
+
+                escolha=tolower(escolha); //LowerCase Char
 
                 switch (escolha) {
                     case 'n':
                         printf("Introduz o novo nome: ");
                         scanf("%s", nome);
+                        const int updateNome = atualizarUser(email, nome, 0);
+
+                        if (updateNome == -1 || updateNome == -2)
+                            printf("Erro ao tentar atualizar user");
+                        else
+                            printf("Atualizado com sucesso");
                         break;
                     case 'i':
                         printf("Introduz a nova idade: ");
                         scanf("%d", &idade);
+                        const int updateIdade = atualizarUser(email, NULL, idade);
+
+                        if (updateIdade == -1 || updateIdade == -2)
+                            printf("Erro ao tentar atualizar user");
+                        else
+                            printf("Atualizado com sucesso");
                         break;
                     default:
                         break;
                 }
-
-                const int resUpdate = atualizarUser(email);
-
-                if (resUpdate == -1 || resUpdate == -2)
-                    printf("Erro ao tentar atualizar user");
-                break;
             case 4:
                 removerUser(email);
                 break;

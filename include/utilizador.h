@@ -4,6 +4,7 @@
 
 #ifndef BIBLIOTECA_UTILIZADOR_H
 #define BIBLIOTECA_UTILIZADOR_H
+#include <stdbool.h>
 
 typedef struct {
     char nome[50];
@@ -20,7 +21,9 @@ typedef enum {
 Result criarUser(const char *nome, const char *email, int idade);
 
 int listarUser();
-int atualizarUser(char *emailUpdate);
+int atualizarUser(char *emailUpdate, char *nome, int idade);
 int removerUser(char *email);
+bool checkUser(char *email);
+int UserID(char *email);
 
 #endif //BIBLIOTECA_UTILIZADOR_H

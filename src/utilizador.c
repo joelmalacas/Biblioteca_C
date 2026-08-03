@@ -8,6 +8,8 @@
 #include "validation.h"
 #include "database.h"
 
+#define TABELA_UTILIZADOR "utilizador"
+
 /**
  *
  * @param nome
@@ -25,7 +27,7 @@ Result criarUser(const char *nome, const char *email, int idade) {
         return DB_ERROR;
 
     const char *query =
-        "INSERT INTO utilizador (nome, email, idade) VALUES (?, ?, ?)";
+        "INSERT INTO " TABELA_UTILIZADOR " (nome, email, idade) VALUES (?, ?, ?)";
 
     MYSQL_STMT *stmt = mysql_stmt_init(conn);
 
@@ -86,8 +88,8 @@ int listarUser() {
     if (conn == NULL)
         return DB_ERROR;
 
-    if (mysql_query(conn, "SELECT nome, email, idade, created_at FROM utilizador")) {
-        printf("Erro %s", mysql_error(conn));
+    if (mysql_query(conn, "SELECT nome, email, idade, created_at FROM " TABELA_UTILIZADOR)) {
+        printf("Erro %s\n", mysql_error(conn));
         dbDisconnect(conn);
         return DB_ERROR;
     }
@@ -119,12 +121,122 @@ int listarUser() {
     return SUCCESS;
 }
 
-int atualizarUser(char *emailUpdate) {
+int atualizarUser(char *emailUpdate, char *nome, int idade) {
     //TODO UPDATE USER
+    MYSQL *conn = dbConnect();
+
+    if (!isValidEmail(emailUpdate))
+        return INVALID_DATA;
+
+    if (!checkUser(emailUpdate))
+        return INVALID_DATA;
+
+    //Obter ID User (email)
+    const int id = UserID(emailUpdate);
+
+    char query[256];
+
+    if (isValidName(nome) && idade == 0) {
+        snprintf(query, sizeof(query),
+            "UPDATE " TABELA_UTILIZADOR " SET nome = \"%s\" WHERE id = %d", nome, id);
+    } else if (isValidAge(idade) && nome == NULL) {
+        snprintf(query, sizeof(query),
+            "UPDATE " TABELA_UTILIZADOR " SET idade = \"%d\" WHERE id = %d", idade, id);
+    }
+
+    if (mysql_query(conn, query)) {
+        dbDisconnect(conn);
+        return DB_ERROR;
+    }
+
+    dbDisconnect(conn);
     return SUCCESS;
 }
 
 int removerUser(char *email) {
     //TODO DEL USER
+    MYSQL *conn = dbConnect();
+
+    if (!isValidEmail(email))
+        return INVALID_DATA;
+
+    if (!checkUser(email))
+        return INVALID_DATA;
+
+    const int id = UserID(email);
+
+    char query[256];
+
+    snprintf(query, sizeof(query),
+        "DELETE FROM " TABELA_UTILIZADOR " WHERE id = \"%d\"", id);
+
+    if (mysql_query(conn, query)) {
+        dbDisconnect(conn);
+        return DB_ERROR;
+    }
+
+    dbDisconnect(conn);
     return SUCCESS;
+}
+
+//===========FUNC AUX===========
+
+bool checkUser(char *email) {
+    //TODO FUNC Bool CHECK USER EXISTS DB
+    MYSQL *conn = dbConnect();
+
+    char query[256];
+
+    snprintf(query, sizeof(query), "SELECT email FROM " TABELA_UTILIZADOR " WHERE email = \"%s\" ", email);
+
+    if (mysql_query(conn, query)) {
+        dbDisconnect(conn);
+        return false;
+    }
+
+    const MYSQL_RES *res = mysql_store_result(conn);
+
+    if (res == NULL) {
+        dbDisconnect(conn);
+        return false;
+    }
+
+    //Verificar se query encontrou result
+    my_ulonglong num_rows = mysql_num_rows(res);
+
+    const bool exists = (num_rows > 0) ? true : false;
+
+    mysql_free_result(res);
+    dbDisconnect(conn);
+
+    return exists;
+}
+
+int UserID(char *email) {
+    //TODO FUNC return ID USER (Email)
+    MYSQL *conn = dbConnect();
+
+    char query[256];
+    int id = 0;
+
+    snprintf(query, sizeof(query), "SELECT id FROM " TABELA_UTILIZADOR " WHERE email = \"%s\" LIMIT 1", email);
+
+    if (mysql_query(conn, query)) {
+        dbDisconnect(conn);
+        return DB_ERROR;
+    }
+
+    const MYSQL_RES *res = mysql_store_result(conn);
+
+    if (res == NULL) {
+        dbDisconnect(conn);
+        return DB_ERROR;
+    }
+
+    MYSQL_ROW row;
+
+    while ((row = mysql_fetch_row(res)))
+        id = atoi(row[0]);
+    dbDisconnect(conn);
+    return id;
 }
