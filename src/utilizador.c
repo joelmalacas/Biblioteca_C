@@ -84,10 +84,15 @@ Result listarUser() {
     //TODO LIST USER
     MYSQL *conn = dbConnect();
 
+    char query[256];
+
+    snprintf(query, sizeof(query),
+        "SELECT nome, email, idade, created_at FROM " TABELA_UTILIZADOR);
+
     if (!conn)
         return DB_ERROR;
 
-    if (mysql_query(conn, "SELECT nome, email, idade, created_at FROM " TABELA_UTILIZADOR)) {
+    if (mysql_query(conn, query)) {
         printf("Erro %s\n", mysql_error(conn));
         dbDisconnect(conn);
         return DB_ERROR;

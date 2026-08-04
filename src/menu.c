@@ -30,8 +30,8 @@ void booksMenu() {
     printf("\n=====Livros Menu=====\n");
     printf("1. Adicionar Livro \n");
     printf("2. Listar Livros \n");
-    printf("3. Procurar Livro \n");
-    printf("4. Atualizar Livro \n");
+    printf("3. Atualizar Livro \n");
+    printf("4. Procurar Livro \n");
     printf("5. Apagar Livro \n");
     printf("0. Voltar \n>");
 }
@@ -52,13 +52,13 @@ void booksMenuLoop() {
         booksMenu();
         option = getOption();
 
-        char nomeLivro[50], autor[30];
+        char titulo[50], autor[30], escolha;
         int ano;
 
         switch (option) {
             case 1:
-                printf("Introduz o nome livro: \n>");
-                scanf("%49s", nomeLivro);
+                printf("Introduz o titulo: \n>");
+                scanf("%49s", titulo);
 
                 printf("Introduz o autor livro: \n>");
                 scanf(" %s", autor);
@@ -66,7 +66,7 @@ void booksMenuLoop() {
                 printf("Introduz o ano do livro: \n>");
                 scanf(" %d", &ano);
 
-                int resAdd = adicionarLivro(nomeLivro, autor, ano);
+                int resAdd = adicionarLivro(titulo, autor, ano);
 
                 if (resAdd == -1 || resAdd == -2)
                     printf("Erro ao tentar criar livro\n");
@@ -77,13 +77,72 @@ void booksMenuLoop() {
                 listarLivros();
                 break;
             case 3:
-                atualizarLivro();
+                printf("Introduz o titulo a atualizar: \n>");
+                scanf("%49s", titulo);
+
+                const bool check = checkUser(titulo);
+
+                if (!check)
+                    break;
+
+                printf("O que deseja alterar?\nAutor (a) ou Ano (i): ");
+                scanf(" %c", &escolha);
+
+                escolha=tolower(escolha); //LowerCase Char
+
+                switch (escolha) {
+                    case 'a':
+                        printf("Introduz o autor: \n>");
+                        scanf(" %s", autor);
+                        break;
+                    case 'i':
+                        printf("Introduz o ano do livro: \n>");
+                        scanf("%d", &ano);
+                        break;
+                    default:
+                        break;
+                }
+
+                int resUpdate = atualizarLivro(titulo, autor, ano);
+
+                if (resUpdate == -1 || resUpdate == -2)
+                    printf("Erro ao tentar atualizar o livro");
                 break;
             case 4:
-                procurarLivro();
+                printf("Introduz o titulo a procurar: \n>");
+                scanf("%49s", titulo);
+
+                const int resSearch = procurarLivro(titulo);
+
+                if (resSearch == -1 || resSearch == -2)
+                    printf("Erro ao tentar procurar livro");
                 break;
             case 5:
-                removerLivro();
+                printf("Introduz o titulo a remover: \n>");
+                scanf("%49s", titulo);
+
+                const bool checkbook = checkBook(titulo);
+
+                if (!checkbook)
+                    break;
+
+                printf("Tem a certeza que quer mesmo apagar o livro? (s) || (n)\n> ");
+                scanf(" %c", &escolha);
+
+                escolha=tolower(escolha); //LowerCase Char
+
+                switch (escolha) {
+                    case 's':
+                        int remBook = removerLivro(titulo);
+
+                        if (remBook == -1 || remBook == -2)
+                            printf("Erro ao tentar apagar livro");
+                        else
+                            printf("Livro apagado com sucesso");
+                        break;
+                    default:
+                        break;
+                }
                 break;
             default:
                 break;
@@ -137,7 +196,7 @@ void usersMenuLoop() {
                 const bool resCheck = checkUser(email);
 
                 if (!resCheck)
-                    break; //Não existe
+                    break;
 
                 printf("O que deseja alterar?\nNome (n) ou Idade (i): ");
                 scanf(" %c", &escolha);
@@ -192,8 +251,6 @@ void usersMenuLoop() {
                             printf("Erro ao tentar apagar utilizador");
                         else
                             printf("Utilizador apagado com sucesso");
-                        break;
-                    case 'n':
                         break;
                     default:
                         break;

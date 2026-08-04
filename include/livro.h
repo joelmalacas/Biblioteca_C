@@ -16,7 +16,11 @@ typedef struct {
 Result adicionarLivro(char *titulo, char *autorLivro, int ano);
 Result listarLivros();
 Result atualizarLivro(char *titulo, char *autor, int ano);
-Result procurarLivro();
-Result removerLivro();
+Result procurarLivro(char *titulo);
+Result removerLivro(char *titulo);
+
+//=====FUNC AUX=====
+bool checkBook(char *titulo);
+int bookID(char *titulo);
 
 #endif //BIBLIOTECA_LIVRO_H
