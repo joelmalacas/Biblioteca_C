@@ -245,7 +245,7 @@ bool checkBook(char *titulo) {
     char query[256];
 
     snprintf(query, sizeof(query),
-        "SELECT email FROM " TABELA_LIVRO " WHERE titulo = \"%s\" ", titulo);
+        "SELECT titulo FROM " TABELA_LIVRO " WHERE titulo = \"%s\" ", titulo);
 
     if (mysql_query(conn, query)) {
         dbDisconnect(conn);

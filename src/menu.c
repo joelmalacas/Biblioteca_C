@@ -94,19 +94,28 @@ void booksMenuLoop() {
                     case 'a':
                         printf("Introduz o autor: \n>");
                         scanf(" %s", autor);
+
+                        int resUpdateAuto = atualizarLivro(titulo, autor, 0);
+
+                        if (resUpdateAuto == -1 || resUpdateAuto == -2)
+                            printf("Erro ao tentar atualizar o livro");
+                        else
+                            printf("livro atualizado com sucesso");
                         break;
                     case 'i':
                         printf("Introduz o ano do livro: \n>");
                         scanf("%d", &ano);
+
+                        int resUpdateAno = atualizarLivro(titulo, NULL, ano);
+
+                        if (resUpdateAno == -1 || resUpdateAno == -2)
+                            printf("Erro ao tentar atualizar o livro");
+                        else
+                            printf("livro atualizado com sucesso");
                         break;
                     default:
                         break;
                 }
-
-                int resUpdate = atualizarLivro(titulo, autor, ano);
-
-                if (resUpdate == -1 || resUpdate == -2)
-                    printf("Erro ao tentar atualizar o livro");
                 break;
             case 4:
                 printf("Introduz o titulo a procurar: \n>");
