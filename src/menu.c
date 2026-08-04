@@ -80,7 +80,7 @@ void booksMenuLoop() {
                 printf("Introduz o titulo a atualizar: \n>");
                 scanf("%49s", titulo);
 
-                const bool check = checkUser(titulo);
+                const bool check = checkBook(titulo);
 
                 if (!check)
                     break;
