@@ -66,9 +66,9 @@ void booksMenuLoop() {
                 printf("Introduz o ano do livro: \n>");
                 scanf(" %d", &ano);
 
-                int resAdd = adicionarLivro(titulo, autor, ano);
+                const int resAdd = adicionarLivro(titulo, autor, ano);
 
-                if (resAdd == -1 || resAdd == -2)
+                if (resAdd == INVALID_DATA || resAdd == DB_ERROR)
                     printf("Erro ao tentar criar livro\n");
                 else
                     printf("Livro criado com sucesso");
@@ -95,9 +95,9 @@ void booksMenuLoop() {
                         printf("Introduz o autor: \n>");
                         scanf(" %s", autor);
 
-                        int resUpdateAuto = atualizarLivro(titulo, autor, 0);
+                        const int resUpdateAuto = atualizarLivro(titulo, autor, 0);
 
-                        if (resUpdateAuto == -1 || resUpdateAuto == -2)
+                        if (resUpdateAuto == INVALID_DATA || resUpdateAuto == DB_ERROR)
                             printf("Erro ao tentar atualizar o livro");
                         else
                             printf("livro atualizado com sucesso");
@@ -106,9 +106,9 @@ void booksMenuLoop() {
                         printf("Introduz o ano do livro: \n>");
                         scanf("%d", &ano);
 
-                        int resUpdateAno = atualizarLivro(titulo, NULL, ano);
+                        const int resUpdateAno = atualizarLivro(titulo, NULL, ano);
 
-                        if (resUpdateAno == -1 || resUpdateAno == -2)
+                        if (resUpdateAno == INVALID_DATA || resUpdateAno == DB_ERROR)
                             printf("Erro ao tentar atualizar o livro");
                         else
                             printf("livro atualizado com sucesso");
@@ -123,7 +123,7 @@ void booksMenuLoop() {
 
                 const int resSearch = procurarLivro(titulo);
 
-                if (resSearch == -1 || resSearch == -2)
+                if (resSearch == INVALID_DATA || resSearch == DB_ERROR)
                     printf("Erro ao tentar procurar livro");
                 break;
             case 5:
@@ -144,7 +144,7 @@ void booksMenuLoop() {
                     case 's':
                         int remBook = removerLivro(titulo);
 
-                        if (remBook == -1 || remBook == -2)
+                        if (remBook == INVALID_DATA || remBook == DB_ERROR)
                             printf("Erro ao tentar apagar livro");
                         else
                             printf("Livro apagado com sucesso");
@@ -184,7 +184,7 @@ void usersMenuLoop() {
 
                 const int res = criarUser(nome, email, idade);
 
-                if (res == -1 || res == -2)
+                if (res == INVALID_DATA || res == DB_ERROR)
                     printf("Erro ao tentar criar user");
                 else
                     printf("Utilizador criado com sucesso");
@@ -192,7 +192,7 @@ void usersMenuLoop() {
             case 2:
                 int resList = listarUser();
 
-                if (resList == -1 || resList == -2)
+                if (resList == INVALID_DATA || resList == DB_ERROR)
                     printf("Erro ao tentar listar user");
                 break;
             case 3:
@@ -218,7 +218,7 @@ void usersMenuLoop() {
                         scanf("%s", nome);
                         const int updateNome = atualizarUser(email, nome, 0);
 
-                        if (updateNome == -1 || updateNome == -2)
+                        if (updateNome == INVALID_DATA || updateNome == DB_ERROR)
                             printf("Erro ao tentar atualizar user");
                         else
                             printf("Atualizado com sucesso");
@@ -228,7 +228,7 @@ void usersMenuLoop() {
                         scanf("%d", &idade);
                         const int updateIdade = atualizarUser(email, NULL, idade);
 
-                        if (updateIdade == -1 || updateIdade == -2)
+                        if (updateIdade == INVALID_DATA || updateIdade == DB_ERROR)
                             printf("Erro ao tentar atualizar user");
                         else
                             printf("Atualizado com sucesso");
@@ -256,7 +256,7 @@ void usersMenuLoop() {
                     case 's':
                         int delUser = removerUser(email);
 
-                        if (delUser == -1 || delUser == -2)
+                        if (delUser == INVALID_DATA || delUser == DB_ERROR)
                             printf("Erro ao tentar apagar utilizador");
                         else
                             printf("Utilizador apagado com sucesso");

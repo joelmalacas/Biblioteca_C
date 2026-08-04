@@ -4,6 +4,7 @@
 
 #ifndef BIBLIOTECA_EMPRESTIMO_H
 #define BIBLIOTECA_EMPRESTIMO_H
+#include "utilizador.h"
 
 typedef struct {
     int id;
@@ -14,9 +15,20 @@ typedef struct {
     int devolvido;
 } Emprestimo;
 
-void loanBook();
-void returnBook();
-void loanActive();
-void loanHistory();
+typedef struct {
+    int dia;
+    int mes;
+    int ano;
+    int hora;
+    int minuto;
+    int segundo;
+} Data;
+
+Result loanBook();
+Result returnBook();
+Result loanActive();
+Result loanHistory();
+//=====FUNC AUX=====
+Data HojeAux();
 
 #endif //BIBLIOTECA_EMPRESTIMO_H

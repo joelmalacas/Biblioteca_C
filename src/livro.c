@@ -6,7 +6,6 @@
 #include "livro.h"
 #include <mysql.h>
 #include <string.h>
-
 #include "database.h"
 #include "validation.h"
 
