@@ -320,7 +320,13 @@ void loansMenuLoop() {
                     printf("Erro ao tentar listar empréstimo");
                 break;
             case 4:
-                loanHistory();
+                printf("Introduz o titulo: \n>");
+                scanf(" %s", titulo);
+
+                const int resHistory = loanHistory(titulo);
+
+                if (resHistory == INVALID_DATA || resHistory == DB_ERROR)
+                    printf("Erro ao listar histórico");
                 break;
             default:
                 break;

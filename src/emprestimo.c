@@ -179,8 +179,71 @@ Result loanActive() {
     return SUCCESS;
 }
 
-Result loanHistory() {
+Result loanHistory(char *tituloLivro) {
     //TODO HISTORICO EMPRESTIMO
+    MYSQL *conn = dbConnect();
+
+    if (!conn)
+        return DB_ERROR;
+
+    const bool check = checkBook(tituloLivro);
+
+    if (!check)
+        return DB_ERROR;
+
+    char query[256];
+
+    const int id_livro = bookID(tituloLivro);
+
+    snprintf(query, sizeof(query),
+        "SELECT id_livro, id_utilizador, data_emprestimo, data_devolucao FROM " TABELA_EMPRESTIMO " WHERE id_livro = %d",
+        id_livro);
+
+    if (mysql_query(conn, query)) {
+        dbDisconnect(conn);
+        return DB_ERROR;
+    }
+
+    MYSQL_RES *res = mysql_store_result(conn);
+
+    if (!res)
+        return DB_ERROR;
+
+    MYSQL_ROW row;
+
+    my_ulonglong num_rows = mysql_num_rows(res);
+
+    printf("\n+--------------------------------+------------------------+------------------+--------------------------+");
+    printf("\n| LIVRO                          | UTILIZADOR             | DATA_EMPRESTIMO  | DATA_DEVOLUCAO           |");
+    printf("\n+--------------------------------+------------------------+------------------+--------------------------+");
+
+    while ((row = mysql_fetch_row(res))) {
+        const int id_liv = atoi(row[0]);
+        const int id_user = atoi(row[1]);
+
+        // Obter o email do utilizador & titulo livro usando o ID único
+        char *email = getEmail(id_user);
+        char *titulo = getTitulo(id_liv);
+
+        const char *data_emp = row[2];
+        const char *data_dev = row[3];
+
+        printf("\n| %-30.30s | %-22.22s | %-16.16s | %-24.24s |",
+           titulo,
+           email,
+           data_emp,
+           data_dev
+        );
+
+        //Libertar Memória alocada
+        if (email) free(email);
+        if (titulo) free(titulo);
+    }
+
+    printf("\n+--------------------------------+------------------------+------------------+--------------------------+");
+    printf("\nEmpréstimos --> %llu\n", num_rows);
+
+    dbDisconnect(conn);
     return SUCCESS;
 }
 

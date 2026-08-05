@@ -27,7 +27,7 @@ typedef struct {
 Result loanBook(char *email, char *tituloLivro, const Data *data_devolucao);
 Result returnBook();
 Result loanActive();
-Result loanHistory();
+Result loanHistory(char *tituloLivro);
 //=====FUNC AUX=====
 Data HojeAux();
 
