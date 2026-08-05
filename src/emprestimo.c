@@ -9,32 +9,46 @@
 #include <time.h>
 #include "database.h"
 #include "livro.h"
+#include "validation.h"
 
 #define TABELA_UTILIZADOR "utilizador"
 #define TABELA_LIVRO "livro"
 #define TABELA_EMPRESTIMO "emprestimo"
 
-Result loanBook(char *email, char *tituloLivro, Data *data_devolucao) {
+Result loanBook(char *email, char *tituloLivro, const Data *data_devolucao) {
     //TODO EMPRESTAR LIVRO
+    if (!isValidEmail(email) || !isValidName(tituloLivro))
+        return INVALID_DATA;
+
+    if (!isValidDay(data_devolucao->dia, data_devolucao->mes, data_devolucao->ano))
+        return INVALID_DATA;
+
+    if (!checkUser(email) || !checkBook(tituloLivro))
+        return INVALID_DATA;
+
     MYSQL *conn = dbConnect();
 
     //=====TIME CONFIG=====
-    Data agora = HojeAux();
+    const Data agora = HojeAux();
+    MYSQL_TIME mysql_agora = {0};
+    MYSQL_TIME mysql_devolucao = {0};
 
-    MYSQL_TIME mysql_agora;
+    //data_emprestimo
     mysql_agora.year = agora.ano;
     mysql_agora.month = agora.mes;
     mysql_agora.day = agora.dia;
     mysql_agora.hour = agora.hora;
     mysql_agora.minute = agora.minuto;
     mysql_agora.second = agora.segundo;
-    mysql_agora.second_part = 0;
-    mysql_agora.neg = 0;
+
+    //data_devolucao
+    mysql_devolucao.year = data_devolucao->ano;
+    mysql_devolucao.month = data_devolucao->mes;
+    mysql_devolucao.day = data_devolucao->dia;
+    mysql_devolucao.hour = agora.hora;
+    mysql_agora.minute = agora.minuto;
+    mysql_agora.second = agora.segundo;
     //====================
-
-    if (!checkUser(email) || !checkBook(tituloLivro))
-        return INVALID_DATA;
-
     //=====PARAM DB=====
     int id_livro = bookID(tituloLivro);
     int id_user = UserID(email);
@@ -61,21 +75,21 @@ Result loanBook(char *email, char *tituloLivro, Data *data_devolucao) {
 
     MYSQL_BIND bind[5] = {0};
 
+    //PARAM ID_LIVRO
     bind[0].buffer_type = MYSQL_TYPE_LONG;
     bind[0].buffer = &id_livro;
 
+    //PARAM ID_USER
     bind[1].buffer_type = MYSQL_TYPE_LONG;
     bind[1].buffer = &id_user;
 
+    //PARAM data_emprestimo
     bind[2].buffer_type = MYSQL_TYPE_DATETIME;
     bind[2].buffer = (char *)&mysql_agora;
-    bind[2].is_null = 0;
-    bind[2].length = 0;
 
+    //PARAM data_devolucao
     bind[3].buffer_type = MYSQL_TYPE_DATETIME;
-    bind[3].buffer = (char *)&data_devolucao;
-    bind[3].is_null = 0;
-    bind[3].length = 0;
+    bind[3].buffer = (char *)&mysql_devolucao;
 
     bind[4].buffer_type = MYSQL_TYPE_LONG;
     bind[4].buffer = &devolvido;

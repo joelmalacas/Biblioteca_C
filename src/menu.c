@@ -279,11 +279,37 @@ void loansMenuLoop() {
     do {
         loansMenu();
 
+        char email[50];
+        char titulo[50];
+        int dia, mes, ano;
+
         option = getOption();
 
         switch (option) {
             case 1:
-                loanBook();
+                printf("Introduz o email do utilizador: \n>");
+                scanf(" %s", email);
+
+                printf("Introduz o título do livro: \n>");
+                scanf(" %s", titulo);
+
+                printf("Introduz o dia para devolver livro: \n>");
+                scanf(" %d", &dia);
+
+                printf("Introduz o mes devolucao: \n>");
+                scanf(" %d",&mes);
+
+                printf("Introduz o ano devolucao: \n>");
+                scanf(" %d", &ano);
+
+                Data devolucao = {.dia = dia, .mes = mes, .ano = ano};
+
+                const int resLoan = loanBook(email, titulo, &devolucao);
+
+                if (resLoan == INVALID_DATA || resLoan == DB_ERROR)
+                    printf("Erro ao tentar atualizar empréstimo");
+                else
+                    printf("Empréstimo criado com sucesso");
                 break;
             case 2:
                 returnBook();

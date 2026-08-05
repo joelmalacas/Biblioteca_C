@@ -24,7 +24,7 @@ typedef struct {
     int segundo;
 } Data;
 
-Result loanBook();
+Result loanBook(char *email, char *tituloLivro, const Data *data_devolucao);
 Result returnBook();
 Result loanActive();
 Result loanHistory();

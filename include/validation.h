@@ -8,5 +8,9 @@
 int isValidName(const char *nome);
 int isValidAge(int idade);
 int isValidEmail(const char *email);
+int isValidDay(int dia, int mes, int ano);
+int isValidYear(int ano);
+int isValidMonth(int mes);
+int isLeapYear(int ano);
 
 #endif //BIBLIOTECA_VALIDATION_H
