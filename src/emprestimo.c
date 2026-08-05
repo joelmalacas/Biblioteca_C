@@ -114,8 +114,33 @@ Result loanBook(char *email, char *tituloLivro, const Data *data_devolucao) {
     return SUCCESS;
 }
 
-Result returnBook() {
+Result returnBook(char *tituloLivro) {
     //TODO DEVOLVER LIVRO
+    MYSQL *conn = dbConnect();
+
+    if (!conn)
+        return DB_ERROR;
+
+    const bool resCheckBook = checkBook(tituloLivro);
+    if (!resCheckBook)
+        return INVALID_DATA;
+
+    const bool resVerifyBook = verifyReturnBook(tituloLivro);
+    if (!resVerifyBook)
+        return INVALID_DATA;
+
+    const int id_livro = bookID(tituloLivro);
+
+    char query[256];
+    snprintf(query, sizeof(query),
+        "UPDATE " TABELA_EMPRESTIMO " SET devolvido = 1 WHERE id_livro = %d", id_livro);
+
+    if (mysql_query(conn, query)) {
+        dbDisconnect(conn);
+        return DB_ERROR;
+    }
+
+    dbDisconnect(conn);
     return SUCCESS;
 }
 
@@ -129,7 +154,8 @@ Result loanActive() {
     char query[256];
 
     snprintf(query, sizeof(query),
-        "SELECT id_livro, id_utilizador, data_emprestimo, data_devolucao FROM " TABELA_EMPRESTIMO " WHERE devolvido = 0");
+        "SELECT id_livro, id_utilizador, data_emprestimo, data_devolucao FROM "
+        TABELA_EMPRESTIMO " WHERE devolvido = 0 ORDER BY data_emprestimo DESC");
 
     if (mysql_query(conn, query)) {
         dbDisconnect(conn);
@@ -262,4 +288,46 @@ Data HojeAux() {
     };
 
     return hoje;
+}
+
+bool verifyReturnBook(char *tituloLivro) {
+    //TODO FUNC AUX PARA VERIFICAR SE O LIVRO PODE SER EMPRESTADO/DEVOLVIDO
+    MYSQL *conn = dbConnect();
+
+    if (!conn)
+        return DB_ERROR;
+
+    const int id_livro = bookID(tituloLivro);
+    int devolvido = 0;
+
+    char query[256];
+
+    snprintf(query, sizeof(query),
+        "SELECT devolvido FROM " TABELA_EMPRESTIMO " WHERE id_livro = %d",id_livro);
+
+    if (mysql_query(conn, query)) {
+        dbDisconnect(conn);
+        return false;
+    }
+
+    const MYSQL_RES *res = mysql_store_result(conn);
+
+    if (!res) {
+        dbDisconnect(conn);
+        return false;
+    }
+
+    MYSQL_ROW row;
+
+    while ((row = mysql_fetch_row(res))) {
+        devolvido = atoi(row[0]);
+    }
+
+    if (devolvido != 0) {
+        dbDisconnect(conn);
+        return false;
+    }
+
+    dbDisconnect(conn);
+    return true;
 }

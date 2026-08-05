@@ -25,10 +25,11 @@ typedef struct {
 } Data;
 
 Result loanBook(char *email, char *tituloLivro, const Data *data_devolucao);
-Result returnBook();
+Result returnBook(char *tituloLivro);
 Result loanActive();
 Result loanHistory(char *tituloLivro);
 //=====FUNC AUX=====
 Data HojeAux();
+bool verifyReturnBook(char *tituloLivro);
 
 #endif //BIBLIOTECA_EMPRESTIMO_H

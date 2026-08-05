@@ -312,7 +312,14 @@ void loansMenuLoop() {
                     printf("Empréstimo criado com sucesso");
                 break;
             case 2:
-                returnBook();
+                printf("Introduz o titulo do livro a devolver: \n>");
+                scanf(" %s", titulo);
+
+                const int resReturnBook = returnBook(titulo);
+                if (resReturnBook == INVALID_DATA || resReturnBook == DB_ERROR)
+                    printf("Erro ao tentar devolver livro\nTente novamente\n\n");
+                else
+                    printf("Livro devolvido com sucesso");
                 break;
             case 3:
                 int resActive = loanActive();
