@@ -5,6 +5,8 @@
 #include <stdio.h>
 #include <ctype.h>
 #include "menu.h"
+#include <stdlib.h>
+
 #include "livro.h"
 #include "utilizador.h"
 #include "emprestimo.h"
@@ -307,7 +309,7 @@ void loansMenuLoop() {
                 const int resLoan = loanBook(email, titulo, &devolucao);
 
                 if (resLoan == INVALID_DATA || resLoan == DB_ERROR)
-                    printf("Erro ao tentar atualizar empréstimo");
+                    printf("Erro ao tentar criar empréstimo");
                 else
                     printf("Empréstimo criado com sucesso");
                 break;
@@ -317,7 +319,7 @@ void loansMenuLoop() {
 
                 const int resReturnBook = returnBook(titulo);
                 if (resReturnBook == INVALID_DATA || resReturnBook == DB_ERROR)
-                    printf("Erro ao tentar devolver livro\nTente novamente\n\n");
+                    printf("Erro ao tentar devolver livro\n");
                 else
                     printf("Livro devolvido com sucesso");
                 break;

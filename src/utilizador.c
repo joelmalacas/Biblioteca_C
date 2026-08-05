@@ -124,7 +124,7 @@ Result listarUser() {
     return SUCCESS;
 }
 
-Result atualizarUser(char *emailUpdate, char *nome, int idade) {
+Result atualizarUser(char *emailUpdate, char *nome, const int idade) {
     //TODO UPDATE USER
     MYSQL *conn = dbConnect();
 
@@ -183,7 +183,6 @@ Result removerUser(char *email) {
 }
 
 //===========FUNC AUX===========
-
 bool checkUser(char *email) {
     //TODO FUNC Bool CHECK USER EXISTS DB
     MYSQL *conn = dbConnect();
