@@ -315,7 +315,9 @@ void loansMenuLoop() {
                 returnBook();
                 break;
             case 3:
-                loanActive();
+                int resActive = loanActive();
+                if (resActive == INVALID_DATA || resActive == DB_ERROR)
+                    printf("Erro ao tentar listar empréstimo");
                 break;
             case 4:
                 loanHistory();

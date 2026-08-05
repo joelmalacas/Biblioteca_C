@@ -298,3 +298,35 @@ int bookID(char *titulo) {
     dbDisconnect(conn);
     return id;
 }
+
+char *getTitulo(const int id) {
+    //TODO FUNC return TITULO (id)
+    MYSQL *conn = dbConnect();
+
+    char query[256];
+
+    snprintf(query, sizeof(query),
+        "SELECT titulo FROM " TABELA_LIVRO " WHERE id = %d LIMIT 1", id);
+
+    if (mysql_query(conn, query)) {
+        dbDisconnect(conn);
+        return NULL;
+    }
+
+    MYSQL_RES *res = mysql_store_result(conn);
+
+    if (!res) {
+        dbDisconnect(conn);
+        return NULL;
+    }
+
+    MYSQL_ROW row = mysql_fetch_row(res);
+    char *titulo = NULL;
+
+    if (row && row[0])
+            titulo = strdup(row[0]);
+    mysql_free_result(res);
+    dbDisconnect(conn);
+
+    return titulo;
+}

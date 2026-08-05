@@ -93,7 +93,6 @@ Result listarUser() {
         return DB_ERROR;
 
     if (mysql_query(conn, query)) {
-        printf("Erro %s\n", mysql_error(conn));
         dbDisconnect(conn);
         return DB_ERROR;
     }
@@ -243,4 +242,37 @@ int UserID(char *email) {
         id = atoi(row[0]);
     dbDisconnect(conn);
     return id;
+}
+
+char *getEmail(const int id) {
+    MYSQL *conn = dbConnect();
+
+    char query[256];
+
+    snprintf(query, sizeof(query),
+             "SELECT email FROM " TABELA_UTILIZADOR " WHERE id = \"%d\" LIMIT 1", id);
+
+    if (mysql_query(conn, query)) {
+        dbDisconnect(conn);
+        return NULL;
+    }
+
+    const MYSQL_RES *res = mysql_store_result(conn);
+
+    if (!res) {
+        dbDisconnect(conn);
+        return NULL;
+    }
+
+    MYSQL_ROW row = mysql_fetch_row(res);
+    char *email = NULL;
+
+    if (row && row[0])
+        // Copia a string para uma nova memória independente
+        email = strdup(row[0]);
+    mysql_free_result(res);
+    dbDisconnect(conn);
+
+    return email;
+
 }

@@ -26,5 +26,6 @@ Result removerUser(char *email);
 //=====FUNC AUX=====
 bool checkUser(char *email);
 int UserID(char *email);
+char *getEmail(int id);
 
 #endif //BIBLIOTECA_UTILIZADOR_H

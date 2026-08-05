@@ -22,5 +22,6 @@ Result removerLivro(char *titulo);
 //=====FUNC AUX=====
 bool checkBook(char *titulo);
 int bookID(char *titulo);
+char *getTitulo(int id);
 
 #endif //BIBLIOTECA_LIVRO_H
