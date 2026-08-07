@@ -7,7 +7,6 @@
 #include "utilizador.h"
 
 typedef struct {
-    int id;
     int id_livro;
     int id_utilizador;
     char data_emprestimo[11];

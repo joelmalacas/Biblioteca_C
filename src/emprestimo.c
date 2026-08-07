@@ -240,9 +240,9 @@ Result loanHistory(char *tituloLivro) {
 
     my_ulonglong num_rows = mysql_num_rows(res);
 
-    printf("\n+------------------------------+----------------------+------------------+------------------+-----------+");
-    printf("\n| LIVRO                        | UTILIZADOR           | DATA_EMPRESTIMO  | DATA_DEVOLUCAO   | DEVOLVIDO |");
-    printf("\n+------------------------------+----------------------+------------------+------------------+-----------+");
+    printf("\n+------------------------------+-------------------------+------------------+------------------+-----------+");
+    printf("\n| LIVRO                        | UTILIZADOR              | DATA_EMPRESTIMO  | DATA_DEVOLUCAO   | DEVOLVIDO |");
+    printf("\n+------------------------------+-------------------------+------------------+------------------+-----------+");
 
     while ((row = mysql_fetch_row(res))) {
         const int id_liv = atoi(row[0]);
@@ -258,20 +258,20 @@ Result loanHistory(char *tituloLivro) {
 
         char *str_devolvido = foi_devolvido ? "SIM" : "NÃO";
 
-        printf("\n| %-28.28s | %-20.20s | %-16.16s | %-16.16s | %-9s |",
+        printf("\n| %-28.28s | %-23.23s | %-16.16s | %-16.16s | %-9s |",
            titulo,
            email,
            data_emp,
            data_dev,
            str_devolvido
-    );
+        );
 
         //Libertar Memória alocada
         if (email) free(email);
         if (titulo) free(titulo);
     }
 
-    printf("\n+--------------------------------+------------------------+------------------+--------------------------+");
+    printf("\n+--------------------------------+---------------------------+------------------+--------------------------+");
     printf("\nEmpréstimos --> %llu\n", num_rows);
 
     dbDisconnect(conn);
